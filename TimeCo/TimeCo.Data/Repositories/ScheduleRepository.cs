@@ -29,5 +29,26 @@ namespace TimeCo.Data.Repositories
 
             _context.SaveChanges();
         }
+
+        // Method for returning the user's schedule
+        public List<Schedule> GetUserSchedule(string username)
+        {
+            using (_context)
+            {
+                var results = from schedule in _context.Schedules
+                              join user in _context.Users on schedule.UserId equals user.Id
+                              where user.Username == username
+                              select new Schedule
+                              {
+                                  StartDate = schedule.StartDate,
+                                  EndDate = schedule.EndDate,
+                                  StartHour = schedule.StartHour,
+                                  EndHour = schedule.EndHour
+                              };
+
+                List<Schedule> result = results.ToList();
+                return result;
+            }
+        }
     }
 }

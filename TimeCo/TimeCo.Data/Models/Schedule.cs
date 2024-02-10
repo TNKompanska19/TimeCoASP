@@ -9,7 +9,7 @@ public partial class Schedule
 
     public string Shift { get; set; } = null!;
 
-    public DateTime StartDate { get; set; }
+    public DateOnly StartDate { get; set; }
 
     public DateTime EndDate { get; set; }
 

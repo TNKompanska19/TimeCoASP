@@ -8,9 +8,9 @@ namespace TimeCo.Web.Controllers
     public class AccountController : Controller
     {
         private UserService _userService;
-        
+
         public AccountController()
-        { 
+        {
             _userService = new UserService();
         }
 
@@ -22,18 +22,26 @@ namespace TimeCo.Web.Controllers
 
         [HttpPost]
         public IActionResult Login(LoginViewModel model)
-                    {
+        {
             // Simulate user authentication logic (replace with your actual logic)
             if (_userService.CheckUser(model.Username, model.Password))
             {
+                string username = model.Username;
                 // Redirect to the home page upon successful login
-                return RedirectToAction("Index", "Home");
+
+
+                // Replace "yourUsername" with the desired username
+                return RedirectToAction("Calendar", "Calendar", new { username = model.Username });
+
             }
 
             // Display error message if credentials are invalid
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return View(model);
         }
+
+       
+
     }
 }
 
