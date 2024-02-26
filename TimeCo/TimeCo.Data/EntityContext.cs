@@ -1,0 +1,85 @@
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using TimeCo.Common.Contracts;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using TimeCo.Data;
+
+public class EntityContext : IdentityUserContext<ApplicationUser, Guid>
+{
+    private readonly ICurrentUser currentUser;
+
+    public EntityContext(DbContextOptions<EntityContext> options, ICurrentUser currentUser = null)
+        : base(options)
+    {
+        this.currentUser = currentUser;
+    }
+
+    public DbSet<Vacation> Vacations { get; set; }
+    public DbSet<Schedule> Schedules { get; set; }
+    public DbSet<Role> Roles { get; set; }
+    public DbSet<Department> Departments { get; set; }
+
+    private static readonly EntityState[] AuditableStates =
+    {
+        EntityState.Added,
+        EntityState.Modified
+    };
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+        builder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+
+
+    }
+
+    public override int SaveChanges(bool acceptAllChangesOnSuccess)
+    {
+        HandleAuditableEntities();
+        return base.SaveChanges(acceptAllChangesOnSuccess);
+    }
+
+    public override int SaveChanges()
+    {
+        HandleAuditableEntities();
+        return base.SaveChanges();
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    {
+        HandleAuditableEntities();
+        return base.SaveChangesAsync(cancellationToken);
+    }
+
+    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
+    {
+        HandleAuditableEntities();
+        return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+    }
+
+    private void HandleAuditableEntities()
+    {
+        var userId = currentUser?.Id?.ToString();
+        var now = DateTime.UtcNow;
+        var auditableEntries = ChangeTracker
+            .Entries()
+            .Where(x => x.Entity is IAuditableEntity && AuditableStates.Contains(x.State))
+            .ToList();
+
+        foreach (var entry in auditableEntries)
+        {
+            var entity = entry.Entity as IAuditableEntity;
+            entity.UpdatedOn = now;
+            entity.UpdatedBy = userId;
+
+            if (entry.State == EntityState.Added)
+            {
+                entity.CreatedOn = now;
+                entity.CreatedBy = userId;
+            }
+        }
+    }
+}
