@@ -11,9 +11,9 @@ namespace TimeCo.Web.Controllers
     {
         private ScheduleService _scheduleService;
 
-        public HomeController(DbContextOptions<EntityContext> dbContextOptions)
+        public HomeController(ScheduleService scheduleService)
         {
-            _scheduleService = new ScheduleService(dbContextOptions);
+            _scheduleService = scheduleService;
         }
    
         [Route("/index")]

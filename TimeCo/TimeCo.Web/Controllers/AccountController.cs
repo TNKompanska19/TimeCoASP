@@ -29,7 +29,8 @@ public class AccountController : Controller
     {
         if (this.User.Identity.IsAuthenticated)
         {
-            return this.RedirectToAction("Index", "Home");
+            var username = this.User.FindFirst(ClaimTypes.Email)?.Value;
+            return this.RedirectToAction("Index", "Home", new { username });
         }
 
         var model = new SignInViewModel();
@@ -42,7 +43,7 @@ public class AccountController : Controller
     {
         if (this.User.Identity.IsAuthenticated)
         {
-            return this.RedirectToAction("Index", "Home");
+            return this.RedirectToAction("Index", "Home", new { username = model.Username });
         }
 
         if (ModelState.IsValid)

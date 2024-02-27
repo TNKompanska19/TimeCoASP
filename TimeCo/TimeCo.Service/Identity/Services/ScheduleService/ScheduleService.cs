@@ -13,9 +13,9 @@ namespace TimeCo.Service.Identity.Services.ScheduleService
     {
         private readonly EntityContext _context;
 
-        public ScheduleService(DbContextOptions<EntityContext> dbContextOptions)
+        public ScheduleService(EntityContext context)
         {
-            _context = new EntityContext(dbContextOptions);
+            _context = context;
         }
 
         public List<ScheduleDTO> GetUserSchedule(string username)
