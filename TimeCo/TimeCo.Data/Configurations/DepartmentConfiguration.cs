@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TimeCo.Data.Configurations
 {
@@ -12,7 +7,6 @@ namespace TimeCo.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Department> builder)
         {
-
             builder
              .Property(x => x.Name)
              .IsRequired();
@@ -20,8 +14,6 @@ namespace TimeCo.Data.Configurations
             builder
                 .Property(x => x.Description)
                 .IsRequired();
-
-
         }
     }
 }

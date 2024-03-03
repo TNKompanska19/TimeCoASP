@@ -1,6 +1,6 @@
-﻿using TimeCo.Common.Contracts;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TimeCo.Common.Contracts;
 
 namespace TimeCo.Data.Configurations
 {
@@ -11,7 +11,6 @@ namespace TimeCo.Data.Configurations
             builder
              .Property(x => x.Shift)
              .IsRequired();
-             
             builder
                 .Property(x => x.StartDate)
                 .IsRequired();
@@ -21,8 +20,8 @@ namespace TimeCo.Data.Configurations
                 .IsRequired();
 
             builder
-                .HasOne<ApplicationUser>(x=>x.User)
-                .WithMany(u => u.Schedules) 
+                .HasOne<ApplicationUser>(x => x.User)
+                .WithMany(u => u.Schedules)
                 .HasForeignKey(s => s.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
         }

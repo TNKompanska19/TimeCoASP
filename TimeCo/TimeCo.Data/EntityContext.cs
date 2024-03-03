@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using TimeCo.Common.Contracts;
-using System;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using TimeCo.Common.Contracts;
 using TimeCo.Data;
+
+#pragma warning disable SA1201, SA1413, SA1101, CS8625, SA1202, SA1129, CS8602, CS8601
 
 public class EntityContext : IdentityUserContext<ApplicationUser, Guid>
 {
@@ -18,8 +21,11 @@ public class EntityContext : IdentityUserContext<ApplicationUser, Guid>
     }
 
     public DbSet<Vacation> Vacations { get; set; }
+
     public DbSet<Schedule> Schedules { get; set; }
+
     public DbSet<Role> Roles { get; set; }
+
     public DbSet<Department> Departments { get; set; }
 
     private static readonly EntityState[] AuditableStates =
@@ -32,8 +38,6 @@ public class EntityContext : IdentityUserContext<ApplicationUser, Guid>
     {
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(GetType().Assembly);
-
-
     }
 
     public override int SaveChanges(bool acceptAllChangesOnSuccess)

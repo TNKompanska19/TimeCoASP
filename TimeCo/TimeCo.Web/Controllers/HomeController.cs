@@ -9,18 +9,18 @@ namespace TimeCo.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private ScheduleService _scheduleService;
+        private ScheduleService scheduleService;
 
         public HomeController(ScheduleService scheduleService)
         {
-            _scheduleService = scheduleService;
+            this.scheduleService = scheduleService;
         }
-   
+
         [Route("/index")]
         public IActionResult Index(string username)
-        { 
-            ViewData["events"] = _scheduleService.GetUserSchedule(username);
-            return View();
+        {
+            this.ViewData["events"] = this.scheduleService.GetUserSchedule(username);
+            return this.View();
         }
     }
 }

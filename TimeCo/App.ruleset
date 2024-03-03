@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Rule set" Description="Rule set" ToolsVersion="17.0">
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp" RuleNamespace="Microsoft.CodeAnalysis.CSharp">
+    <Rule Id="CS0114" Action="None" />
+    <Rule Id="CS1998" Action="None" />
+    <Rule Id="CS8601" Action="None" />
+    <Rule Id="CS8602" Action="None" />
+    <Rule Id="CS8604" Action="None" />
+    <Rule Id="CS8618" Action="None" />
+    <Rule Id="CS8981" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="AD0001" Action="Warning" />
+    <Rule Id="CS0436" Action="Warning" />
+    <Rule Id="CS1998" Action="None" />
+    <Rule Id="CS8034" Action="Warning" />
+    <Rule Id="SA0001" Action="None" />
+    <Rule Id="SA1200" Action="None" />
+    <Rule Id="SA1305" Action="Warning" />
+    <Rule Id="SA1412" Action="Warning" />
+    <Rule Id="SA1413" Action="None" />
+    <Rule Id="SA1516" Action="None" />
+    <Rule Id="SA1600" Action="None" />
+    <Rule Id="SA1609" Action="Warning" />
+    <Rule Id="SA1633" Action="None" />
+    <Rule Id="SA1639" Action="Warning" />
+    <Rule Id="SA1652" Action="Warning" />
+    <Rule Id="SX1309S" Action="Warning" />
+  </Rules>
+</RuleSet>

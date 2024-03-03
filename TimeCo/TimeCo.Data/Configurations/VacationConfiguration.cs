@@ -1,11 +1,11 @@
-﻿using TimeCo.Common.Contracts;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TimeCo.Common.Contracts;
 
 namespace TimeCo.Data.Configurations
 {
-    public class vacationConfiguration : IEntityTypeConfiguration<Vacation>
-    { 
+    public class VacationConfiguration : IEntityTypeConfiguration<Vacation>
+    {
         public void Configure(EntityTypeBuilder<Vacation> builder)
         {
             builder

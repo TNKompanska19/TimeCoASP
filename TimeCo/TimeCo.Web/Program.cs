@@ -1,13 +1,9 @@
-using System;
-using TimeCo.Service;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Hosting;
 using TimeCo.Data;
+using TimeCo.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +22,8 @@ builder.Services
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
     {
         options.LoginPath = "/";
-        //options.LogoutPath = "/";
+
+        // options.LogoutPath = "/";
         options.ExpireTimeSpan = TimeSpan.FromDays(7);
     });
 
@@ -65,6 +62,7 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Home/Error");
+
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }

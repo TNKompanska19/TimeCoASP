@@ -2,7 +2,9 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
+#pragma warning disable SA1300 // Disable warning for missing XML comments
 
+// Disable warning for missing XML comments
 namespace TimeCo.Data.Migrations
 {
     /// <inheritdoc />

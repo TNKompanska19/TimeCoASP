@@ -1,16 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using TimeCo.Data;
-using TimeCo.Web.Models;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using TimeCo.Data;
 using TimeCo.Web.Models;
 
 namespace TimeCo.Web.Controllers;
@@ -29,14 +23,13 @@ public class AccountController : Controller
     {
         if (this.User.Identity.IsAuthenticated)
         {
-            var username = this.User.FindFirst(ClaimTypes.Email)?.Value;
-            return this.RedirectToAction("Index", "Home", new { username });
+            var model = new SignInViewModel();
+            return this.View(model);
         }
 
-        var model = new SignInViewModel();
-        return this.View(model);
+        var username = this.User.FindFirst(ClaimTypes.Email)?.Value;
+        return this.RedirectToAction("Index", "Home", new { username });
     }
-
 
     [HttpPost("/")]
     public async Task<IActionResult> SignIn(SignInViewModel model)
@@ -46,19 +39,19 @@ public class AccountController : Controller
             return this.RedirectToAction("Index", "Home", new { username = model.Username });
         }
 
-        if (ModelState.IsValid)
+        if (this.ModelState.IsValid)
         {
             var user = await this.userManager.FindByEmailAsync(model.Username);
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "Invalid credentials");
+                this.ModelState.AddModelError(string.Empty, "Invalid credentials");
                 return this.View(model);
             }
 
             var isPasswordCorrect = await this.userManager.CheckPasswordAsync(user, model.Password);
             if (!isPasswordCorrect)
             {
-                ModelState.AddModelError(string.Empty, "Invalid credentials");
+                this.ModelState.AddModelError(string.Empty, "Invalid credentials");
                 return this.View(model);
             }
 
@@ -87,7 +80,7 @@ public class AccountController : Controller
     public async Task<IActionResult> SignOut()
     {
         await this.HttpContext.SignOutAsync();
-        return this.RedirectToAction(nameof(SignIn));
+        return this.RedirectToAction(nameof(this.SignIn));
     }
 
     [HttpGet("/SignUp")]
@@ -110,7 +103,7 @@ public class AccountController : Controller
             return this.RedirectToAction("Index", "Home");
         }
 
-        if (ModelState.IsValid)
+        if (this.ModelState.IsValid)
         {
             await this.userManager.CreateAsync(
                 new ApplicationUser
@@ -126,5 +119,4 @@ public class AccountController : Controller
 
         return this.View(model);
     }
-
 }

@@ -1,6 +1,6 @@
-﻿using TimeCo.Common.Contracts;
+﻿using Microsoft.Extensions.DependencyInjection;
+using TimeCo.Common.Contracts;
 using TimeCo.Service.Identity.Services;
-using Microsoft.Extensions.DependencyInjection;
 using TimeCo.Service.Identity.Services.ScheduleService;
 
 namespace TimeCo.Service

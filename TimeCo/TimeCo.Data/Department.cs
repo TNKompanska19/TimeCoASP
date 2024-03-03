@@ -9,6 +9,7 @@ namespace TimeCo.Data
     public class Department : AuditableEntity
     {
         public string Name { get; set; }
+
         public string Description { get; set; }
 
         public ICollection<ApplicationUser> Users { get; }

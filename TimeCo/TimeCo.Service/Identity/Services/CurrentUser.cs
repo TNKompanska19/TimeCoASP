@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Claims;
-using TimeCo.Common.Contracts;
 using Microsoft.AspNetCore.Http;
-
+using TimeCo.Common.Contracts;
 
 namespace TimeCo.Service.Identity.Services
 {
@@ -13,7 +12,7 @@ namespace TimeCo.Service.Identity.Services
 
         private Guid? userId;
 
-        public CurrentUser(IHttpContextAccessor httpContextAccessor = null)
+        public CurrentUser(IHttpContextAccessor? httpContextAccessor = null)
         {
             this.httpContextAccessor = httpContextAccessor;
         }
