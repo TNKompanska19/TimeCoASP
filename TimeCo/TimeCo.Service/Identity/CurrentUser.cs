@@ -4,7 +4,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using TimeCo.Common.Contracts;
 
-namespace TimeCo.Service.Identity.Services
+namespace TimeCo.Service.Identity
 {
     internal class CurrentUser : ICurrentUser
     {

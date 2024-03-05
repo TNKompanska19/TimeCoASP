@@ -2,16 +2,16 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Logging;
-using TimeCo.Service.Identity.Services.ScheduleService;
+using TimeCo.Service.Schedules.Services;
 using TimeCo.Web.Models;
 
 namespace TimeCo.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private ScheduleService scheduleService;
+        private readonly IScheduleService scheduleService;
 
-        public HomeController(ScheduleService scheduleService)
+        public HomeController(IScheduleService scheduleService)
         {
             this.scheduleService = scheduleService;
         }

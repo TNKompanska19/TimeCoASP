@@ -1,5 +1,6 @@
-﻿@{
-    var events = ViewData["events"] as IEnumerable<TimeCo.Service.Models.ScheduleDTO>;
+﻿@using TimeCo.Service.Schedules.Models
+@{
+    var events = ViewData["events"] as IEnumerable<ScheduleDTO>;
     var length = events?.Count() ?? 0;
 }
 

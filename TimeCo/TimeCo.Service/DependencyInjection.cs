@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TimeCo.Common.Contracts;
-using TimeCo.Service.Identity.Services;
-using TimeCo.Service.Identity.Services.ScheduleService;
-
+using TimeCo.Service.Identity;
+using TimeCo.Service.Schedules.Services;
+using TimeCo.Service.Users.Services;
 namespace TimeCo.Service
 {
     public static class DependencyInjection
@@ -10,8 +10,8 @@ namespace TimeCo.Service
         public static IServiceCollection AddServiceLayer(this IServiceCollection services)
         {
             services.AddScoped<ICurrentUser, CurrentUser>();
-            services.AddScoped<ScheduleService>();
-
+            services.AddScoped<IScheduleService, ScheduleService>();
+            services.AddScoped<IUserService, UserService>();
             return services;
         }
     }

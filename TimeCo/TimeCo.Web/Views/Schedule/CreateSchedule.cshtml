@@ -1,0 +1,55 @@
+﻿@using TimeCo.Web.Shared
+@using TimeCo.Web.Models
+@model CreateScheduleViewModel
+@{
+    var createResult = this.ViewData.GetMutationResultOrDefault();
+}
+
+@if (createResult != null)
+{
+    <div class="alert alert-@(createResult.Succeeded ? "success" : "danger")">
+        @createResult.Message
+    </div>
+}
+
+<form method="post" asp-action="CreateSchedule">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label class="form-label">Shift</label>
+                <input class="form-control" asp-for="Shift" />
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label class="form-label">Start Date</label>
+                <input type="date" class="form-control" asp-for="StartDate" asp-format="{0:yyyy-MM-dd}" />
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label class="form-label">End Date</label>
+                <input type="date" class="form-control" asp-for="EndDate" asp-format="{0:yyyy-MM-dd}" />
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label class="form-label">User</label>
+                <select asp-for="UserId" class="form-select">
+                    <option selected>Please select user</option>
+                    @if (Model.Users != null)
+                    {
+                        foreach (var user in Model.Users)
+                        {
+                            <option value="@user.Id">@user.UserName</option>
+                        }
+                    }
+                </select>
+                <span class="text-danger" asp-validation-for="UserId"></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">Save</button>
+    </div>
+</form>
