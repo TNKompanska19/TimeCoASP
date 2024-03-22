@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TimeCo.Data;
 
-namespace TimeCo.Data
+namespace TimeCo.Service.Vacations.Models
 {
-    public class Vacation : AuditableEntity
+    public class VacationDTO
     {
         public string? Name { get; set; }
 
@@ -14,9 +15,9 @@ namespace TimeCo.Data
 
         public string Status { get; set; }
 
-        public DateOnly StartDate { get; set; }
+        public string StartDate { get; set; }
 
-        public DateOnly EndDate { get; set; }
+        public string EndDate { get; set; }
 
         public Guid? UserId { get; set; }
 

@@ -7,7 +7,7 @@ using TimeCo.Data;
 
 namespace TimeCo.Service.Schedules.Models
 {
-    public class ScheduleDTO
+    public class ScheduleDTO : IAuditableEntity
     {
         public Guid Id { get; set; }
 

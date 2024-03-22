@@ -1,5 +1,6 @@
 ﻿using Essentials.Results;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using TimeCo.Data;
 using TimeCo.Service.Schedules.Models;
@@ -28,6 +29,8 @@ namespace TimeCo.Service.Schedules.Services
                 scheduleEntity.EndDate = DateOnly.ParseExact(schedule.EndDate, "yyyy-MM-dd");
                 scheduleEntity.UserId = schedule.UserId;
 
+                // scheduleEntity.UpdatedBy = scheduleEntity.UserId.ToString();
+                // scheduleEntity.CreatedBy = scheduleEntity.UserId.ToString();
                 this.context.Schedules.Add(scheduleEntity);
                 await this.context.SaveChangesAsync();
 

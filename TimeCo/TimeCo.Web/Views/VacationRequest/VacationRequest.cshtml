@@ -1,0 +1,44 @@
+﻿@using TimeCo.Web.Shared
+@using TimeCo.Web.Models
+@model VacationViewModel
+@{
+    var createResult = this.ViewData.GetMutationResultOrDefault();
+}
+
+@if (createResult != null)
+{
+    <div class="alert alert-@(createResult.Succeeded ? "success" : "danger")">
+        @createResult.Message
+    </div>
+}
+
+<form method="post" asp-action="VacationRequest">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label class="form-label">Name</label>
+                <input class="form-control" asp-for="Name" />
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label class="form-label">Start Date</label>
+                <input type="date" class="form-control" asp-for="StartDate" asp-format="{0:yyyy-MM-dd}" />
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label class="form-label">End Date</label>
+                <input type="date" class="form-control" asp-for="EndDate" asp-format="{0:yyyy-MM-dd}" />
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <textarea class="form-control" asp-for="Description" id="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
+            <label for="message">Message</label>
+            <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">Save</button>
+    </div>
+</form>

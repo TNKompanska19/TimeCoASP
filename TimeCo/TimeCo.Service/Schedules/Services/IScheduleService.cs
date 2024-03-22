@@ -9,6 +9,6 @@ namespace TimeCo.Service.Schedules.Services
     {
         Task<ScheduleDTO> FetchScheduleAsync();
         Task<MutationResult> CreateScheduleAsync(ScheduleDTO schedule);
-        public List<ScheduleDTO> GetUserSchedule(string username);
+        List<ScheduleDTO> GetUserSchedule(string username);
     }
 }

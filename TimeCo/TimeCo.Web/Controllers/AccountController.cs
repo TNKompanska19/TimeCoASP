@@ -23,12 +23,12 @@ public class AccountController : Controller
     {
         if (this.User.Identity.IsAuthenticated)
         {
-            var model = new SignInViewModel();
-            return this.View(model);
+            var username = this.User.FindFirst(ClaimTypes.Email)?.Value;
+            return this.RedirectToAction("Index", "Home", new { username });
         }
 
-        var username = this.User.FindFirst(ClaimTypes.Email)?.Value;
-        return this.RedirectToAction("Index", "Home", new { username });
+        var model = new SignInViewModel();
+        return this.View(model);
     }
 
     [HttpPost("/")]
@@ -75,7 +75,7 @@ public class AccountController : Controller
         return this.View(model);
     }
 
-    [HttpGet("/SignOut")]
+    [HttpGet("/sign-out")]
     [Authorize]
     public async Task<IActionResult> SignOut()
     {
@@ -83,7 +83,7 @@ public class AccountController : Controller
         return this.RedirectToAction(nameof(this.SignIn));
     }
 
-    [HttpGet("/SignUp")]
+    [HttpGet("/sign-up")]
     public async Task<IActionResult> SignUp()
     {
         if (this.User.Identity.IsAuthenticated)
@@ -95,7 +95,7 @@ public class AccountController : Controller
         return this.View(model);
     }
 
-    [HttpPost("/SignUp")]
+    [HttpPost("/sign-up")]
     public async Task<IActionResult> SignUp(SignUpViewModel model)
     {
         if (this.User.Identity.IsAuthenticated)
