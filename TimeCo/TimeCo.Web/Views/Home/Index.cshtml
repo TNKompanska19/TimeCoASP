@@ -1,51 +1,27 @@
-﻿@using TimeCo.Service.Schedules.Models
-@{
-    var events = ViewData["events"] as IEnumerable<ScheduleDTO>;
+﻿@{
+    var events = ViewData["events"] as List<CalendarEventViewModel>;
     var length = events?.Count() ?? 0;
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
 
 <div class="calendarContainer">
     <div id="calendar"></div>
 </div>
 
-<table id="todoTable">
-    @for (int i = 0; i < length; i++)
+<table id="todoTable" style="display: none;">
+    @foreach (var evt in events)
     {
         <tr>
-            <td>@Html.Encode(events.ElementAt(i).Id)</td>
-            <td>@Html.Encode(events.ElementAt(i).Shift)</td>
-            <td>@Html.Encode(events.ElementAt(i).StartDate)</td>
+            <td>@Html.Encode(evt.Id)</td>
+            <td>@Html.Encode(evt.Title)</td>
+            <td>@Html.Encode(evt.StartDate)</td>
+            <td>@Html.Encode(evt.EndDate)</td>
         </tr>
     }
 </table>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.1.0/main.min.css">
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.1.0/main.min.js"></script>
-
-<style>
-    /* Hide the table */
-    #todoTable {
-        display: none;
-    }
-
-    /* Style to prevent digits and week names from looking like links */
-    .fc-day-number,
-    .fc-day-header,
-    .fc-col-header-cell-cushion,
-    .fc-daygrid-day-number {
-        cursor: default;
-        text-decoration: none;
-        color: inherit;
-    }
-
-    /* Style to prevent events from looking like links */
-    .fc-event {
-        cursor: default;
-        text-decoration: none;
-        color: inherit;
-    }
-
-</style>
 
 <script>
     let eventsArr = loadData();
@@ -63,6 +39,7 @@
                 id: tdElems[0].innerText,
                 title: tdElems[1].innerText,
                 start: tdElems[2].innerText,
+                end: tdElems[3].innerText // Add end date
             }
 
             eventsArr.push(eventObj);
@@ -73,10 +50,12 @@
 
     function getColorForEventTitle(title) {
         // Customize this function to map titles to specific colors
-        if (title === 'FirstShift') {
+        if (title === 'First') {
             return '#4287f5'; // Change this to your desired color
-        } else if (title === 'SecondShift') {
+        } else if (title === 'Second') {
             return '#9042f5'; // Change this to your desired color
+        } else if (title === 'Vacation') {
+            return '#8073de'; // Change this to your desired color
         } else {
             return '#cd86f0'; // Default color
         }

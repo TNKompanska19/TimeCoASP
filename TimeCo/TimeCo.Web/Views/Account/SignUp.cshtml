@@ -3,6 +3,7 @@
 @model SignUpViewModel
 @{
     var nonModelErrors = ViewContext.GetNonModelErrors();
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 @if (nonModelErrors != null && nonModelErrors.Any())

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using TimeCo.Data;
+using TimeCo.Service.Schedules.Models;
 using TimeCo.Service.Schedules.Services;
 using TimeCo.Service.Vacations.Models;
 
@@ -85,6 +86,26 @@ namespace TimeCo.Service.Vacations.Services
 
             vacation.Status = newStatus;
             await this.context.SaveChangesAsync();
+        }
+
+        public List<VacationDTO> GetUserVacation(string username)
+        {
+            var results = from vacation in this.context.Vacations
+                          join user in this.context.Users on vacation.UserId equals user.Id
+                          where user.UserName == username
+                          select new VacationDTO
+                          {
+                              Id = vacation.Id,
+                              StartDate = vacation.StartDate.ToString(),
+                              EndDate = vacation.EndDate.ToString(),
+                              Name = vacation.Name,
+                              Description = vacation.Description,
+                              Status = vacation.Status,
+                              UserId = user.Id,
+                          };
+
+            List<VacationDTO> result = results.ToList();
+            return result;
         }
     }
 }

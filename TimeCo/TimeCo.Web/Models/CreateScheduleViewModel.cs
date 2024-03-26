@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using TimeCo.Data;
-using TimeCo.Service.Users.Models;
 namespace TimeCo.Web.Models
 {
     public class CreateScheduleViewModel

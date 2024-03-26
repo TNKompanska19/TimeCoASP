@@ -5,17 +5,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TimeCo.Data;
+using TimeCo.Service.Roles.Services;
 using TimeCo.Web.Models;
-
 namespace TimeCo.Web.Controllers;
 
 public class AccountController : Controller
 {
     private readonly UserManager<ApplicationUser> userManager;
-
-    public AccountController(UserManager<ApplicationUser> userManager)
+    private readonly IRoleService roleService;
+    public AccountController(UserManager<ApplicationUser> userManager, IRoleService roleService)
     {
         this.userManager = userManager;
+        this.roleService = roleService;
     }
 
     [HttpGet("/")]
@@ -24,7 +25,16 @@ public class AccountController : Controller
         if (this.User.Identity.IsAuthenticated)
         {
             var username = this.User.FindFirst(ClaimTypes.Email)?.Value;
-            return this.RedirectToAction("Index", "Home", new { username });
+            var user = await this.userManager.FindByEmailAsync(username);
+            var role = this.roleService.GetRoleByIdAsync(user.RoleId);
+            if (role == "User")
+            {
+                return this.RedirectToAction("Index", "Home", new { username });
+            }
+            else
+            {
+                return this.RedirectToAction("CreateSchedule", "Schedule");
+            }
         }
 
         var model = new SignInViewModel();
@@ -69,7 +79,14 @@ public class AccountController : Controller
                 claimsPrincipal,
                 new AuthenticationProperties { IsPersistent = true });
 
-            return this.RedirectToAction("Index", "Home", new { username = model.Username });
+            if (user.RoleId == Guid.Parse("5DAEAB8C-F3E3-462C-9180-92437F5DDD6D"))
+            {
+                return this.RedirectToAction("Index", "Home", new { username = model.Username });
+            }
+            else
+            {
+                return this.RedirectToAction("CreateSchedule", "Schedule");
+            }
         }
 
         return this.View(model);
@@ -86,11 +103,6 @@ public class AccountController : Controller
     [HttpGet("/sign-up")]
     public async Task<IActionResult> SignUp()
     {
-        if (this.User.Identity.IsAuthenticated)
-        {
-            return this.RedirectToAction("Index", "Home");
-        }
-
         var model = new SignUpViewModel();
         return this.View(model);
     }
@@ -98,11 +110,6 @@ public class AccountController : Controller
     [HttpPost("/sign-up")]
     public async Task<IActionResult> SignUp(SignUpViewModel model)
     {
-        if (this.User.Identity.IsAuthenticated)
-        {
-            return this.RedirectToAction("Index", "Home");
-        }
-
         if (this.ModelState.IsValid)
         {
             await this.userManager.CreateAsync(
@@ -111,10 +118,11 @@ public class AccountController : Controller
                     Email = model.Email,
                     UserName = model.Email,
                     EmailConfirmed = true,
+                    RoleId = Guid.Parse("5DAEAB8C-F3E3-462C-9180-92437F5DDD6D")
                 },
                 model.Password);
 
-            return this.RedirectToAction("Index", "Home");
+            return this.RedirectToAction("SignUp", "Account");
         }
 
         return this.View(model);

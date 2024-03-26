@@ -12,5 +12,9 @@ namespace TimeCo.Data
         public ICollection<Schedule> Schedules { get; }
 
         public ICollection<Vacation> Vacations { get; }
+
+        public Guid RoleId { get; set; }
+
+        public Role Role { get; set; }
     }
 }

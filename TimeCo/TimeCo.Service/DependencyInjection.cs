@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TimeCo.Common.Contracts;
 using TimeCo.Service.Identity;
+using TimeCo.Service.Roles.Services;
 using TimeCo.Service.Schedules.Services;
-using TimeCo.Service.Users.Services;
 using TimeCo.Service.Vacations.Services;
 namespace TimeCo.Service
 {
@@ -12,7 +12,7 @@ namespace TimeCo.Service
         {
             services.AddScoped<ICurrentUser, CurrentUser>();
             services.AddScoped<IScheduleService, ScheduleService>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IVacationService, VacationService>();
             return services;
         }

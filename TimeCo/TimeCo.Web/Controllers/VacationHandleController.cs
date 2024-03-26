@@ -6,13 +6,13 @@ using TimeCo.Web.Models;
 
 namespace TimeCo.Web.Controllers
 {
-    public class VacationHandle : Controller
+    public class VacationHandleController : Controller
     {
         private readonly IVacationService vacationService;
         private readonly TimeCo.Common.Contracts.ICurrentUser currentUser;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public VacationHandle(IVacationService vacationService, UserManager<ApplicationUser> userManager, TimeCo.Common.Contracts.ICurrentUser currentUser)
+        public VacationHandleController(IVacationService vacationService, UserManager<ApplicationUser> userManager, TimeCo.Common.Contracts.ICurrentUser currentUser)
         {
             this.vacationService = vacationService;
             this.userManager = userManager;
@@ -20,7 +20,7 @@ namespace TimeCo.Web.Controllers
         }
 
         [HttpGet("/vacation-handle")]
-        public async Task<IActionResult> VacationHandler()
+        public async Task<IActionResult> VacationHandle()
         {
             var vacations = await this.vacationService.FetchVacationsAsync();
             return this.View(vacations);
@@ -31,7 +31,7 @@ namespace TimeCo.Web.Controllers
         {
             await this.vacationService.UpdateVacationStatusAsync(name, "Approved");
 
-            return this.RedirectToAction("VacationHandler", "VacationHandle");
+            return this.RedirectToAction("VacationHandle", "VacationHandle");
         }
 
         [HttpPost]

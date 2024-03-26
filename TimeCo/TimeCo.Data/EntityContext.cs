@@ -9,8 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using TimeCo.Common.Contracts;
 using TimeCo.Data;
 
-#pragma warning disable SA1201, SA1413, SA1101, CS8625, SA1202, SA1129, CS8602, CS8601
-
 public class EntityContext : IdentityUserContext<ApplicationUser, Guid>
 {
     private readonly ICurrentUser currentUser;

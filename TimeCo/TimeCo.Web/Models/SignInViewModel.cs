@@ -10,4 +10,6 @@ public class SignInViewModel
     [Required(ErrorMessage = "Password is required")]
     [DataType(DataType.Password)]
     public string Password { get; set; }
+
+    public Guid RoleId { get; set; }
 }

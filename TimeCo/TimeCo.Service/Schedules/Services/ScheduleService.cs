@@ -57,6 +57,7 @@ namespace TimeCo.Service.Schedules.Services
                           {
                               Id = schedule.Id,
                               StartDate = schedule.StartDate.ToString(),
+                              EndDate = schedule.EndDate.ToString(),
                               Shift = schedule.Shift,
                               UserId = user.Id,
                           };
